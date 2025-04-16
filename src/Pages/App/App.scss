@@ -124,15 +124,50 @@ body {
 						position: absolute;
 						top: 50%;
 						left: 50%;
+						display: flex;
+						align-items: center;
+						gap: 20px;
+						color: #42567A;
+						font-size: 20px;
+						line-height: 30px;
+
+						// &_opened {
+						.culture-trends {
+							&__number {
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								width: 56px;
+								height: 56px;
+								border-radius: 50%;
+								border: 1px solid #303E5880;
+
+							}
+
+							&__description {
+								font-weight: bold;
+							}
+						}
+
+						// }
+
+						&_closed {
+							width: 6px;
+							height: 6px;
+							border-radius: 50%;
+							background-color: #42567A;
+
+							.culture-trends {
+
+								&__number,
+								&__description {
+									display: none;
+								}
+							}
+						}
 					}
 
-					&__number {
-						&_opened {}
 
-						&_closed {}
-					}
-
-					&__description {}
 				}
 
 				.toggle {

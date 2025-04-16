@@ -17,17 +17,17 @@ const App = () => {
 
 					<div className='sections__list culture-trends'>
 						<ul className='culture-trends__list'>
-							{/* <li className='culture-trends__item'>
+							<li className='culture-trends__item_closed'>
 								<p className='culture-trends__number'>1</p>
 								<p className='culture-trends__description'>
 									Литература
 								</p>
 							</li>
-							<li className='culture-trends__item'>
+							{/* <li className='culture-trends__item'>
 								<p className='culture-trends__number'>2</p>
 								<p className='culture-trends__description'>Театр</p>
-							</li>
-							<li className='culture-trends__item'>
+							</li> */}
+							{/* <li className='culture-trends__item'>
 								<p className='culture-trends__number'>3</p>
 								<p className='culture-trends__description'>Кино</p>
 							</li>
@@ -41,6 +41,7 @@ const App = () => {
 					{/* слайдер */}
 					<div className='sections__toggle toggle'>
 						<p className='toggle__section-number'>{`06`}/06</p>
+						{/* Попробовать центрировать картинку через флекс */}
 						<button
 							type='button'
 							className='toggle__button toggle__button_prev'
