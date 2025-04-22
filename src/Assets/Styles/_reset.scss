@@ -1,4 +1,25 @@
-/* Reset and base styles  */
+// Common styles
+body {
+	font-family: $pt-sans;
+	font-weight: 400;
+	font-size: 14px;
+
+	.container {
+		max-width: 1440px;
+		width: 100%;
+		margin-left: calc((100vw - 1440px)*2/3);
+		margin-right: calc((100vw - 1440px)*1/3);
+		position: relative;
+
+		// !разобраться фикс при ширине <= 1440 (появляется x-скролл когда 1441 < vw < 1483)
+		@media (max-width: 1440px) {
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+}
+
+// Reset styles 
 * {
 	padding: 0px;
 	margin: 0px;
