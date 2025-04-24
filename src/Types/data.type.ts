@@ -12,3 +12,9 @@ export interface IEvent {
 	year: number;
 	content: string;
 }
+
+export type TypeCircleParams = [
+	centerX: number,
+	centerY: number,
+	radius: number
+];
