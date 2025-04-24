@@ -42,8 +42,9 @@ const Dates: FC<DatesProps> = ({ data }) => {
 
 	// Ссылки на компоненты и переменные
 	const swiperRef = useRef(null);
-	const sectionYears = useRef(years);
+	const sectionYearsRef = useRef(years);
 	const descriptionsRefs = useRef<(HTMLSpanElement | null)[]>([]);
+	const sectionNameMobileRef = useRef(null);
 	const rotationAngle = useRef({
 		angle: initRotationAngle - (360 / data.length) * selectedSectionId,
 	});
@@ -52,7 +53,7 @@ const Dates: FC<DatesProps> = ({ data }) => {
 	// Интегрируем таймлайн для анимации
 	// animations:
 	// 	1) = hideElements(hideDescription + hideSwiper) - duration: 0.4,
-	// 	2) = rotationAnimation + sectionYearsAnimation - duration: 0.8
+	// 	2) = rotationAnimation + sectionYearsRefAnimation - duration: 0.8
 	// 	3) = showElements(showDescription + showSwiper) - duration: 0.4
 	const tl = gsap.timeline();
 
@@ -115,27 +116,31 @@ const Dates: FC<DatesProps> = ({ data }) => {
 				},
 			});
 		// Анимация заголовка
-		const sectionYearsAnimation = () =>
-			gsap.to(sectionYears.current, {
+		const sectionYearsRefAnimation = () =>
+			gsap.to(sectionYearsRef.current, {
 				startYear: newStateYears.startYear,
 				endYear: newStateYears.endYear,
 				duration: 0.8,
 				ease: 'power1.inOut',
 				onUpdate: () => {
 					setYears({
-						startYear: Math.round(sectionYears.current.startYear),
-						endYear: Math.round(sectionYears.current.endYear),
+						startYear: Math.round(sectionYearsRef.current.startYear),
+						endYear: Math.round(sectionYearsRef.current.endYear),
 					});
 				},
 				onComplete: () => {
-					sectionYears.current.startYear = newStateYears.startYear;
-					sectionYears.current.endYear = newStateYears.endYear;
+					sectionYearsRef.current.startYear = newStateYears.startYear;
+					sectionYearsRef.current.endYear = newStateYears.endYear;
 				},
 			});
 		// Отображение спрятанных элементов
 		const showElements = () =>
 			gsap.to(
-				[descriptionsRefs.current[selectedSectionId], swiperRef.current],
+				[
+					descriptionsRefs.current[selectedSectionId],
+					swiperRef.current,
+					sectionNameMobileRef.current,
+				],
 				{
 					opacity: 1,
 					duration: 0.4,
@@ -146,7 +151,7 @@ const Dates: FC<DatesProps> = ({ data }) => {
 		// Добавляем анимации в таймлайн
 		// tl.add(hideElements, 0); - добавлен в handleSectionSwitch
 		tl.add(rotationAnimation(), '>');
-		tl.add(sectionYearsAnimation(), '<');
+		tl.add(sectionYearsRefAnimation(), '<');
 		tl.add(showElements(), '>');
 		//
 	}, [selectedSectionId, data.length]);
@@ -174,7 +179,11 @@ const Dates: FC<DatesProps> = ({ data }) => {
 		// Описываем анимацию, добавляем её в таймлайн
 		const hideElements = () =>
 			gsap.to(
-				[descriptionsRefs.current[selectedSectionId], swiperRef.current],
+				[
+					descriptionsRefs.current[selectedSectionId],
+					swiperRef.current,
+					sectionNameMobileRef.current,
+				],
 				{
 					opacity: 0,
 					duration: 0.4,
@@ -227,6 +236,12 @@ const Dates: FC<DatesProps> = ({ data }) => {
 						))}
 					</ul>
 				</div>
+				<h3
+					ref={sectionNameMobileRef}
+					className='section__name section__name-mobile'
+				>
+					{data[selectedSectionId].section}&nbsp;
+				</h3>
 				<div className='sections__toggle toggle'>
 					<p className='toggle__section-number'>
 						{/* Приводим к виду 01/06, 10/15, 103/150 */}
@@ -247,7 +262,11 @@ const Dates: FC<DatesProps> = ({ data }) => {
 							}}
 							disabled={selectedSectionId === 0}
 						>
-							<img src={arrowPrev} alt='Назад' />
+							<img
+								className='toggle__image'
+								src={arrowPrev}
+								alt='Назад'
+							/>
 						</button>
 						<button
 							type='button'
@@ -261,7 +280,11 @@ const Dates: FC<DatesProps> = ({ data }) => {
 							}}
 							disabled={selectedSectionId === data.length - 1}
 						>
-							<img src={arrowNext} alt='Вперёд' />
+							<img
+								className='toggle__image'
+								src={arrowNext}
+								alt='Вперёд'
+							/>
 						</button>
 					</div>
 				</div>
@@ -273,8 +296,8 @@ const Dates: FC<DatesProps> = ({ data }) => {
 						disabledClass: 'swiper-button-disabled',
 					}}
 					mousewheel={true}
-					spaceBetween={80}
-					slidesPerView={3}
+					spaceBetween={25}
+					slidesPerView={'auto'}
 					ref={swiperRef}
 					className='sections__events events'
 				>

@@ -1,7 +1,5 @@
 .dates {
 	padding: 170px 40px 104px 80px;
-	position: relative;
-	height: 100%;
 
 	// боковые бордеры раздела
 	&::before {
@@ -49,7 +47,7 @@
 	.sections {
 		&__years {
 			display: flex;
-			font-weight: 700;
+			font-weight: bold;
 			font-size: 200px;
 			line-height: 160px;
 			position: absolute;
@@ -81,9 +79,9 @@
 				border-radius: 50%;
 
 				.culture-trends__item {
-					// начальная центровка относительно списка (круга) ВСЕХ элементов списка
+					// начальная центровка относительно списка (круга)
 					position: absolute;
-					top: calc(50% - 5px); //при d=530: 262
+					top: calc(50% - 5px);
 					left: calc(50% - 5px);
 					display: flex;
 					align-items: center;
@@ -92,8 +90,6 @@
 					min-height: 56px;
 					border-radius: 50%;
 					cursor: pointer;
-
-					// border: 1px solid black;
 
 					.culture-trends__number {
 						display: flex;
@@ -120,7 +116,6 @@
 					.culture-trends__description {
 						display: none;
 						opacity: 0;
-						// transition: opacity 0.4s ease-in-out 0.4s;
 					}
 
 					&:hover {
@@ -149,7 +144,6 @@
 							background-color: white;
 						}
 
-						// будет устанавливаться через gsap средства
 						.culture-trends__description {
 							display: flex;
 							opacity: 0;
@@ -157,6 +151,10 @@
 					}
 				}
 			}
+		}
+
+		.section__name-mobile {
+			display: none;
 		}
 
 		.toggle {
@@ -182,6 +180,11 @@
 				align-items: center;
 				transition: all 0.3s ease-in-out;
 
+				.toggle__image {
+					width: 7px;
+					height: 12px;
+				}
+
 				&:not(.toggle__button_disabled):hover {
 					scale: 1.05;
 				}
@@ -193,9 +196,7 @@
 			}
 		}
 
-		// слайдер с событиями
 		.events {
-			width: calc(100% + 120px);
 			position: relative;
 			left: -80px;
 			padding: 0 80px;
@@ -205,6 +206,7 @@
 				flex-direction: column;
 				align-items: start;
 				gap: 15px;
+				max-width: 350px;
 			}
 
 			&__title {
@@ -237,10 +239,127 @@
 				}
 			}
 		}
+
+		.pagination {
+			display: none;
+		}
 	}
 }
 
 @media screen and (max-width: 950px) {
-	.dates {}
+	.dates {
+		padding: 59px 20px 13px;
 
+		&::before,
+		&::after,
+		&__decoration_vertical-line,
+		&__decoration_horizontal-line,
+		&__title::after {
+			display: none;
+		}
+
+		&__title {
+			font-size: 20px;
+			margin-bottom: 154px;
+			max-width: 123px;
+		}
+
+		.sections {
+			&__years {
+				font-size: 56px;
+				line-height: normal;
+				top: 163px;
+				left: 20px;
+				letter-spacing: -1px;
+			}
+
+			.culture-trends {
+				display: none;
+			}
+
+			.section__name-mobile {
+				display: block;
+				font-weight: bold;
+				color: #42567A;
+				padding-bottom: 15px;
+				border-bottom: 1px solid #C7CDD9;
+				margin-bottom: 20px;
+			}
+
+			.toggle {
+				margin-bottom: 0;
+				position: absolute;
+				bottom: 14px;
+				z-index: 2;
+
+				&__section-number {
+					margin-bottom: 10px;
+				}
+
+				&__controllers {
+					gap: 8px;
+				}
+
+				&__button {
+					width: 25px;
+					height: 25px;
+
+					.toggle__image {
+						width: 4px;
+						height: 7px;
+					}
+				}
+			}
+
+			.events {
+				left: 0;
+				padding: 0;
+				margin-bottom: calc(78px + 50px);
+
+				&__item {
+					max-width: 166px;
+				}
+
+				&__title {
+					font-size: 16px;
+				}
+
+				&__descriptions {
+					font-size: 14px;
+					line-height: 145%;
+				}
+
+				.swiper-button {
+					display: none;
+				}
+			}
+
+			.pagination {
+				display: flex;
+				gap: 10px;
+				position: absolute;
+				bottom: 32px;
+				left: 0;
+				right: 0;
+				justify-content: center;
+				margin-left: auto;
+				margin-right: auto;
+
+				&__item {
+					width: 6px;
+					height: 6px;
+					background-color: #42567A;
+					border-radius: 50%;
+					opacity: 0.4;
+					cursor: pointer;
+					transition: opacity 0.4s;
+
+					&-active {
+						background-color: #42567A;
+						opacity: 1;
+					}
+				}
+			}
+		}
+	}
 }
