@@ -288,28 +288,30 @@ const Dates: FC<DatesProps> = ({ data }) => {
 						</button>
 					</div>
 				</div>
-				<Swiper
-					modules={[Navigation, Mousewheel]}
-					navigation={{
-						nextEl: '.swiper-button-next',
-						prevEl: '.swiper-button-prev',
-						disabledClass: 'swiper-button-disabled',
-					}}
-					mousewheel={true}
-					spaceBetween={25}
-					slidesPerView={'auto'}
-					ref={swiperRef}
-					className='sections__events events'
-				>
-					{data[selectedSectionId].events.map((item, index) => (
-						<SwiperSlide key={index} className='events__item'>
-							<h3 className='events__title'>{item.year}</h3>
-							<p className='events__descriptions'>{item.content}</p>
-						</SwiperSlide>
-					))}
+				<div className='sections__events'>
+					<Swiper
+						modules={[Navigation, Mousewheel]}
+						navigation={{
+							nextEl: '.swiper-button-next',
+							prevEl: '.swiper-button-prev',
+							disabledClass: 'swiper-button-disabled',
+						}}
+						mousewheel={true}
+						spaceBetween={25}
+						slidesPerView={'auto'}
+						ref={swiperRef}
+						className='events'
+					>
+						{data[selectedSectionId].events.map((item, index) => (
+							<SwiperSlide key={index} className='events__item'>
+								<h3 className='events__title'>{item.year}</h3>
+								<p className='events__descriptions'>{item.content}</p>
+							</SwiperSlide>
+						))}
+					</Swiper>
 					<div className='swiper-button swiper-button-next'></div>
 					<div className='swiper-button swiper-button-prev'></div>
-				</Swiper>
+				</div>
 				{/* Пагинация по секциям для мобильной версии */}
 				<div className='sections__pagination pagination'>
 					{data.map((item, index) => (
