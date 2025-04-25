@@ -1,4 +1,4 @@
-# StarWars
+# Only.Task
 
 Свёрстанная страница, адаптированная под макеты на 1920 и 320 пикселей. Анимация основных взаимодействующих элементов.
 
@@ -14,9 +14,12 @@
 ## Демо работы
 
 -  "Десктоп" версия 1920-950px
-   <img src="https://github.com/user-attachments/assets/88afa392-bd16-4be2-b300-4e6916df6927"/>
+
+<img src="https://github.com/user-attachments/assets/88afa392-bd16-4be2-b300-4e6916df6927"/>
+   
 -  "Мобильная" версия 320px
-   <img src="https://github.com/user-attachments/assets/4567930f-20d1-4d4b-8490-334ffeaa6400"/>
+
+<img src="https://github.com/user-attachments/assets/4567930f-20d1-4d4b-8490-334ffeaa6400"/>
 
 ## Стэк
 
