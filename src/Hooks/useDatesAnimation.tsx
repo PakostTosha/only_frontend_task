@@ -39,18 +39,20 @@ export const useDatesAnimations = (data: IData[]) => {
 
 	// Ссылки на компоненты и переменные
 	const swiperRef = useRef<SwiperRef | null>(null);
-	const sectionYearsRef = useRef(years);
+	const sectionYearsRef = useRef<{ startYear: number; endYear: number }>(
+		years
+	);
 	const descriptionsRefs = useRef<(HTMLSpanElement | null)[]>([]);
 	const sectionNameMobileRef = useRef<HTMLHeadingElement>(null);
-	const rotationAngle = useRef({
+	const rotationAngle = useRef<{ angle: number }>({
 		angle: initRotationAngle - (360 / data.length) * selectedSectionId,
 	});
-	const prevSelectedSectionId = useRef(selectedSectionId);
+	const prevSelectedSectionId = useRef<number>(selectedSectionId);
 
 	// Таймлайн для анимации
 	const tl = gsap.timeline();
 
-	// Встроенный хуй для оптимизации анимации
+	// Встроенный хук для оптимизации анимации
 	useGSAP(() => {
 		// Первый рендер (угол посчитан сразу при указании ссылки)
 		if (prevSelectedSectionId.current === selectedSectionId) {
@@ -87,7 +89,7 @@ export const useDatesAnimations = (data: IData[]) => {
 		};
 
 		// Добавляем анимации в таймлайн
-		// 1) hideElements
+		// 1) hideElements - добавляется при обработке переключения секций
 		// 2) rotationAnimation
 		tl.add(
 			rotationAnimation(
