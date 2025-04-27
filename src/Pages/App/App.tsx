@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { IData } from '../../Types/data.type';
 import { fetchData, sortDataEvents } from '../../Services/getData.services';
-import Dates from '../../Components/Dates/Dates';
-import Loader from '../../Components/Loader/Loader';
+import Dates from '../../Components/Dates';
+import Loader from '../../Components/Loader';
 
 const App = () => {
 	const [data, setData] = useState<IData[]>([]);

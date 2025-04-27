@@ -18,3 +18,9 @@ export type TypeCircleParams = [
 	centerY: number,
 	radius: number
 ];
+
+export interface IPopularDatesComponentsProps {
+	data: IData[];
+	selectedSectionId: number;
+	handleSectionSwitch: (value: boolean | number) => void;
+}

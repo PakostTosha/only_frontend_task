@@ -1,4 +1,6 @@
 import gsap from 'gsap';
+import { IData, TypeCircleParams } from '../Types/data.type';
+import { SwiperRef } from 'swiper/react';
 
 // Расчёт координат точек
 export const getPointsCoordinates = (
@@ -51,3 +53,126 @@ export const getDeltaAngle = (
 	const angleChange = diff * stepAngle;
 	return angleChange;
 };
+
+// Рассчёт нового угла поворота
+export const getNewRotationAngle = (
+	rotationAngle: React.RefObject<{
+		angle: number;
+	}>,
+	data: IData[],
+	prevSelectedSectionId: React.RefObject<number>,
+	selectedSectionId: number
+): number =>
+	rotationAngle.current.angle -
+	getDeltaAngle(data.length, prevSelectedSectionId.current, selectedSectionId);
+
+// Ради чистоты эксперимента вынесем функции из хука
+// Определение функции в переданных условиях переключения секции
+export const handleSectionSwitchSetOnComplete = (
+	value: boolean | number,
+	selectedSectionId: number,
+	setSelectedSectionId: (value: number) => void,
+	data: IData[]
+): void => {
+	// Обрабатываем переключение секции (toggle или номер секции), устанавливаем функцию
+	switch (typeof value) {
+		case 'boolean':
+			if (selectedSectionId >= 0 && selectedSectionId < data.length) {
+				return value
+					? setSelectedSectionId(selectedSectionId + 1)
+					: setSelectedSectionId(selectedSectionId - 1);
+			} else {
+				console.error('Ошибка в переключении секции');
+				return;
+			}
+		case 'number':
+			return setSelectedSectionId(value);
+	}
+};
+
+// Функции ниже вынесены из хука useDatesAnimations в основном для соблюдение принципа единой ответственности, в принципе можно было обойтись и без этого
+
+// Скрытие элементов
+export const hideElements = (
+	elements: (HTMLSpanElement | SwiperRef | null)[],
+	onCompleteFunction: () => void
+) =>
+	gsap.to(elements, {
+		opacity: 0,
+		duration: 0.4,
+		ease: 'power1.out',
+		onComplete: onCompleteFunction,
+	});
+
+// Отображение спрятанных элементов
+export const showElements = (
+	elements: (HTMLSpanElement | SwiperRef | null)[]
+) =>
+	gsap.to(elements, {
+		opacity: 1,
+		duration: 0.4,
+		ease: 'power1.out',
+	});
+
+// Анимация заголовка
+export const sectionYearsRefAnimation = (
+	yearsRef: React.RefObject<{
+		startYear: number;
+		endYear: number;
+	}>,
+	startYear: number,
+	endYear: number,
+	setYears: (
+		newState: React.SetStateAction<{
+			startYear: number;
+			endYear: number;
+		}>
+	) => void
+) =>
+	gsap.to(yearsRef.current, {
+		startYear: startYear,
+		endYear: endYear,
+		duration: 0.8,
+		ease: 'power1.inOut',
+		onUpdate: () => {
+			setYears({
+				startYear: Math.round(yearsRef.current.startYear),
+				endYear: Math.round(yearsRef.current.endYear),
+			});
+		},
+		onComplete: () => {
+			yearsRef.current.startYear = startYear;
+			yearsRef.current.endYear = endYear;
+		},
+	});
+
+// Анимация поворот секций
+export const rotationAnimation = (
+	rotationAngle: React.RefObject<{
+		angle: number;
+	}>,
+	newRotationAngle: number,
+	data: IData[],
+	initCircleParams: TypeCircleParams,
+	prevSelectedSectionId: React.RefObject<number>,
+	selectedSectionId: number
+) =>
+	gsap.to(rotationAngle.current, {
+		angle: newRotationAngle,
+		yoyo: true,
+		duration: 0.8,
+		ease: 'power1.inOut',
+		onUpdate: () => {
+			setPointsPosition(
+				getPointsCoordinates(
+					data.length,
+					...initCircleParams,
+					rotationAngle.current.angle
+				)
+			);
+		},
+		onComplete: () => {
+			rotationAngle.current.angle = newRotationAngle;
+			prevSelectedSectionId.current = selectedSectionId;
+		},
+	});
