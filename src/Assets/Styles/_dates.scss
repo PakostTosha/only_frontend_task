@@ -1,0 +1,382 @@
+.dates {
+	padding: 170px 40px 104px 80px;
+
+	// боковые бордеры раздела
+	&::before {
+		content: "";
+		@include vertical-line;
+		left: 0;
+	}
+
+	&::after {
+		content: "";
+		@include vertical-line;
+		right: 0px;
+	}
+
+	&__decoration_vertical-line {
+		@include vertical-line;
+		left: 50%;
+	}
+
+	&__decoration_horizontal-line {
+		@include horizontal-line;
+		top: 480px;
+	}
+
+	&__title {
+		font-weight: bold;
+		font-size: 56px;
+		line-height: 1.2;
+		color: #42567A;
+		margin-bottom: 393px;
+		max-width: 353px;
+
+		// декоративный элемент заголовка (mobile: none)
+		&::after {
+			content: "";
+			position: absolute;
+			left: 0px;
+			top: 177px;
+			width: 5px;
+			height: 120px;
+			background-image: linear-gradient(#3877EE, #EF5DA8);
+		}
+	}
+
+	.sections {
+		&__years {
+			display: flex;
+			font-weight: bold;
+			font-size: 200px;
+			line-height: 160px;
+			position: absolute;
+			top: 400px;
+			// динамический отступ (-0px для возможного смещения влево/вправо при необходимости)
+			left: calc(-0px + (100% - 973px)/2);
+			// статический отступ из макета
+			// left: 214px; 
+			letter-spacing: -3.5px;
+
+			&_start {
+				color: #5D5FEF;
+			}
+
+			&_end {
+				color: #EF5DA8;
+			}
+		}
+
+		.culture-trends {
+			position: absolute;
+			left: calc((100% - 530px)/2);
+			top: 215px;
+
+			&__list {
+				width: 530px;
+				height: 530px;
+				box-shadow: 0px 0px 2px rgba(34, 60, 80, 1);
+				border-radius: 50%;
+
+				.culture-trends__item {
+					// начальная центровка относительно списка (круга)
+					position: absolute;
+					top: calc(50% - 5px);
+					left: calc(50% - 5px);
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					min-width: 56px;
+					min-height: 56px;
+					border-radius: 50%;
+					cursor: pointer;
+
+					.culture-trends__number {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						border-radius: 50%;
+						overflow: hidden;
+						font-size: 20px;
+						border: 1px solid rgba(48, 62, 88, 0.5);
+
+						color: transparent;
+						width: 6px;
+						height: 6px;
+						background-color: #42567A;
+						transition:
+							width 0.6s,
+							height 0.6s,
+							background-color 0.6s;
+					}
+
+					// У всех элементов - название секции выпадает из потока, кроме выбранной секции
+					// Это обеспечит мгновенное появление названия при открытии страницы
+					// Дальнейший эффект "исчезновение - появления" названия реализуется при помощи анимации в компоненте
+					.culture-trends__description {
+						display: none;
+						opacity: 0;
+					}
+
+					&:hover {
+						.culture-trends__number {
+							color: #42567A;
+							width: 56px;
+							height: 56px;
+							background-color: white;
+						}
+					}
+
+					// открытое положение
+					&.culture-trends__item_selected {
+						font-size: 20px;
+						display: flex;
+						align-items: center;
+						gap: 20px;
+						line-height: 0.3;
+						color: #42567A;
+						cursor: default;
+
+						.culture-trends__number {
+							color: #42567A;
+							width: 56px;
+							height: 56px;
+							background-color: white;
+						}
+
+						.culture-trends__description {
+							display: flex;
+							opacity: 0;
+						}
+					}
+				}
+			}
+		}
+
+		.section__name-mobile {
+			display: none;
+		}
+
+		.toggle {
+			color: #42567A;
+			margin-bottom: 56px;
+
+			&__section-number {
+				margin-bottom: 20px;
+			}
+
+			&__controllers {
+				display: flex;
+				gap: 20px;
+			}
+
+			&__button {
+				width: 50px;
+				height: 50px;
+				box-shadow: inset 0 0 0 1px rgba(66, 86, 122, 0.5);
+				border-radius: 50%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				transition: all 0.3s ease-in-out;
+
+				.toggle__image {
+					width: 7px;
+					height: 12px;
+				}
+
+				&:not(.toggle__button_disabled):hover {
+					scale: 1.05;
+				}
+
+				&_disabled {
+					cursor: not-allowed;
+					opacity: 0.5;
+				}
+			}
+		}
+
+		&__events {
+			position: relative;
+			padding-right: 40px;
+
+			.events {
+				position: relative;
+
+				&__item {
+					display: flex;
+					flex-direction: column;
+					align-items: start;
+					gap: 15px;
+					max-width: 350px;
+				}
+
+				&__title {
+					font-family: $bebas-neue;
+					line-height: 1.2;
+					font-size: 25px;
+					color: #3877EE;
+				}
+
+				&__descriptions {
+					font-size: 20px;
+					line-height: 30px;
+					color: #42567A;
+				}
+
+			}
+
+			.swiper-button {
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				box-shadow: 0 0 15px 0 rgba(56, 119, 238, 0.1);
+
+				&-next {
+					--swiper-navigation-sides-offset: -20px;
+				}
+
+				&-prev {
+					--swiper-navigation-sides-offset: -60px;
+				}
+
+				&-next::after,
+				&-prev::after {
+					font-size: 12px;
+				}
+
+				&-disabled {
+					display: none;
+				}
+			}
+		}
+
+		.pagination {
+			display: none;
+		}
+	}
+}
+
+@media screen and (max-width: 950px) {
+	.dates {
+		padding: 59px 20px 13px;
+
+		&::before,
+		&::after,
+		&__decoration_vertical-line,
+		&__decoration_horizontal-line,
+		&__title::after {
+			display: none;
+		}
+
+		&__title {
+			font-size: 20px;
+			margin-bottom: 154px;
+			max-width: 123px;
+		}
+
+		.sections {
+			&__years {
+				font-size: 56px;
+				line-height: normal;
+				top: 163px;
+				left: 20px;
+				letter-spacing: -1px;
+			}
+
+			.culture-trends {
+				display: none;
+			}
+
+			.section__name-mobile {
+				display: block;
+				font-weight: bold;
+				color: #42567A;
+				padding-bottom: 15px;
+				border-bottom: 1px solid #C7CDD9;
+				margin-bottom: 20px;
+			}
+
+			.toggle {
+				margin-bottom: 0;
+				position: absolute;
+				bottom: 14px;
+				z-index: 2;
+
+				&__section-number {
+					margin-bottom: 10px;
+				}
+
+				&__controllers {
+					gap: 8px;
+				}
+
+				&__button {
+					width: 25px;
+					height: 25px;
+
+					.toggle__image {
+						width: 4px;
+						height: 7px;
+					}
+				}
+			}
+
+			&__events {
+				// position: relative;
+				padding-right: 0px;
+
+				.events {
+					left: 0;
+					padding: 0;
+					margin-bottom: calc(78px + 50px);
+
+					&__item {
+						max-width: 160px;
+					}
+
+					&__title {
+						font-size: 16px;
+					}
+
+					&__descriptions {
+						font-size: 14px;
+						line-height: 145%;
+					}
+
+				}
+
+				.swiper-button {
+					display: none;
+				}
+			}
+
+			.pagination {
+				display: flex;
+				gap: 10px;
+				position: absolute;
+				bottom: 32px;
+				left: 0;
+				right: 0;
+				justify-content: center;
+				margin-left: auto;
+				margin-right: auto;
+
+				&__item {
+					width: 6px;
+					height: 6px;
+					background-color: #42567A;
+					border-radius: 50%;
+					opacity: 0.4;
+					cursor: pointer;
+					transition: opacity 0.4s;
+
+					&-active {
+						background-color: #42567A;
+						opacity: 1;
+					}
+				}
+			}
+		}
+	}
+}
